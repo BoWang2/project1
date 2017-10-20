@@ -39,13 +39,37 @@ public function post()
  				//upload file to the upload/filename.csv
  				header('Location:index.php?page=display&filename='. $_FILES["file"]["name"]);
  				//Transfer the user to the display page
- 			
 			}
 
 		}
 		else
 		{
-			echo "There are some mistake :".$_FILES["file"]["error"]."<br>";
+			switch($_FILES["file"]["error"])//output the reason why it dispaly error
+			{
+				case 1:
+					$this->html .= stringfunction::printThis("The uploaded file exceeds the upload_max_filesize directive in php.ini");
+					break;
+				case 2:
+					$this->html .= stringfunction::printThis("The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form.");
+					break;
+				case 3:
+					 $this->html .= stringfunction::printThis("The uploaded file was only partially uploaded");
+					break;
+				case 4:
+					$this->html .= stringfunction::printThis("No file was uploaded");
+					break;
+				case 6:
+					$this->html .= stringfunction::printThis("Missing a temporary folder. Introduced in PHP 5.0.3.");
+					break;
+				case 7:
+					$this->html .= stringfunction::printThis("Failed to write file to disk. Introduced in PHP 5.1.0.");
+					break;
+			}
+
+
+
+
+			//echo "There are some mistake :".$_FILES["file"]["error"]."<br>";
 		}
 
 	}
